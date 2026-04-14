@@ -1,7 +1,7 @@
 """
 Promptloop evaluation script.
-Loads system_prompt.txt + config.py, runs LLM on EVAL_SAMPLES SQuAD v2 examples,
-computes average F1, and prints structured summary.
+Loads system_prompt.txt + config.py, runs LLM on EVAL_SAMPLES SQuAD v2
+examples, computes average F1, and prints structured summary.
 
 Usage:
     uv run evaluate.py > run.log 2>&1
@@ -30,7 +30,7 @@ def call_llm(system_prompt, context, question):
     api_key = os.environ.get(config.API_KEY_ENV)
     if not api_key:
         raise EnvironmentError(
-            f"API key not found. Set the {config.API_KEY_ENV} environment variable."
+            f"API key not found. Set the {config.API_KEY_ENV} env variable."
         )
 
     user_message = f"Context: {context}\n\nQuestion: {question}"
@@ -65,7 +65,8 @@ def call_llm(system_prompt, context, question):
 
     else:
         raise ValueError(
-            f"Unknown provider: {config.PROVIDER!r}. Use 'openai' or 'anthropic'."
+            f"Unknown provider: {config.PROVIDER!r}. "
+            "Use 'openai' or 'anthropic'."
         )
 
     return answer, tokens
@@ -78,7 +79,9 @@ def call_llm(system_prompt, context, question):
 
 def main():
     # Load system prompt
-    prompt_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "system_prompt.txt")
+    prompt_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "system_prompt.txt"
+    )
     with open(prompt_path) as f:
         system_prompt = f.read().strip()
 
@@ -99,7 +102,7 @@ def main():
     for i, example in enumerate(examples, 1):
         context = example["context"]
         question = example["question"]
-        ground_truths = example["answers"]  # list of strings, empty if unanswerable
+        ground_truths = example["answers"]  # empty list if unanswerable
 
         try:
             prediction, tokens = call_llm(system_prompt, context, question)
@@ -111,7 +114,9 @@ def main():
         total_f1 += f1
         total_tokens += tokens
 
-        pred_display = prediction[:60] + "..." if len(prediction) > 60 else prediction
+        pred_display = (
+            prediction[:60] + "..." if len(prediction) > 60 else prediction
+        )
         gt_display = ground_truths[0] if ground_truths else "unanswerable"
         print(
             f"  example {i:03d}/{total} | f1: {f1:.2f} | "
