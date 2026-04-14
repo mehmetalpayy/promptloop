@@ -1,0 +1,12 @@
+# Experiment outputs (untracked by design)
+results.tsv
+run.log
+progress.png
+
+# Cache
+__pycache__/
+*.pyc
+.python-version
+
+# Data cache
+.cache/
