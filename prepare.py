@@ -29,15 +29,20 @@ SEED = 42
 
 def _normalize_answer(s):
     """Lower text, remove punctuation, articles, and extra whitespace."""
+
     def remove_articles(text):
         return re.sub(r"\b(a|an|the)\b", " ", text)
+
     def white_space_fix(text):
         return " ".join(text.split())
+
     def remove_punc(text):
         exclude = set(string.punctuation)
         return "".join(ch for ch in text if ch not in exclude)
+
     def lower(text):
         return text.lower()
+
     return white_space_fix(remove_articles(remove_punc(lower(s))))
 
 
@@ -92,7 +97,7 @@ def download_dataset():
                 "title": example["title"],
                 "context": example["context"],
                 "question": example["question"],
-                "answers": example["answers"]["text"],  # list of answer strings
+                "answers": example["answers"]["text"],  # list of strings
             }
             f.write(json.dumps(row) + "\n")
 
@@ -126,7 +131,7 @@ def load_eval_dataset(eval_samples):
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Download SQuAD v2 for promptloop")
+    parser = argparse.ArgumentParser(description="Download SQuAD v2 for promptloop")  # noqa: E501
     parser.parse_args()
     download_dataset()
     print("Done! Ready to evaluate.")
