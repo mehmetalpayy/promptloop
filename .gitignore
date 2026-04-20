@@ -7,6 +7,9 @@ progress.png
 __pycache__/
 *.pyc
 .python-version
+.venv/
+venv/
+*.egg-info/
 
 # Data cache
 .cache/
