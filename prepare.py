@@ -27,6 +27,7 @@ SEED = 42
 # F1 metric (official SQuAD evaluation)
 # ---------------------------------------------------------------------------
 
+
 def _normalize_answer(s):
     """Lower text, remove punctuation, articles, and extra whitespace."""
 
